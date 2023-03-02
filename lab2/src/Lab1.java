@@ -27,25 +27,12 @@ public class Lab1 {
         }
     }
     public static double computeArea(Point3d p1, Point3d p2, Point3d p3) {
-        double x1 = p1.getX(), y1 = p1.getY(), z1 = p1.getZ();
-        double x2 = p2.getX(), y2 = p2.getY(), z2 = p2.getZ();
-        double x3 = p3.getX(), y3 = p3.getY(), z3 = p3.getZ();
-        // вычисляем векторы AB и AC
-            double ABx = x2 - x1;
-            double ABy = y2 - y1;
-            double ABz = z2 - z1;
-            double ACx = x3 - x1;
-            double ACy = y3 - y1;
-            double ACz = z3 - z1;
-            // вычисляем векторное произведение AB и AC
-            double crossProductX = ABy * ACz - ABz * ACy;
-            double crossProductY = ABz * ACx - ABx * ACz;
-            double crossProductZ = ABx * ACy - ABy * ACx;
-    
-            // вычисляем площадь треугольника
-            double area = 0.5 * Math.sqrt(crossProductX * crossProductX +
-                                           crossProductY * crossProductY +
-                                           crossProductZ * crossProductZ);
-            return area;
+        double a = p1.distanceTo(p2);
+        double b = p2.distanceTo(p3);
+        double c = p1.distanceTo(p3);
+        double s = ((a + b + c) / 2);
+        // вычисляем площадь треугольника
+        double area = Math.sqrt(s * (s-a) * (s-b) * (s-c));
+        return area;
     }    
 }
