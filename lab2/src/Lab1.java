@@ -27,9 +27,11 @@ public class Lab1 {
         }
     }
     public static double computeArea(Point3d p1, Point3d p2, Point3d p3) {
+        // Вычисляем длины сторон треугольника
         double a = p1.distanceTo(p2);
         double b = p2.distanceTo(p3);
         double c = p1.distanceTo(p3);
+        // Вычисляем полупериметр
         double s = ((a + b + c) / 2);
         // вычисляем площадь треугольника
         double area = Math.sqrt(s * (s-a) * (s-b) * (s-c));
