@@ -19,6 +19,7 @@ public class Lab1 {
                 point3 = new Point3d(coords[0], coords[1], coords[2]);
             }           
         }
+        in.close();
         if (Point3d.equals(point1, point2) || Point3d.equals(point2, point3) || Point3d.equals(point1, point3)) {
             System.out.println("Имеются одинаковые точки!");
         }

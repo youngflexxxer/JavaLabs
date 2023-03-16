@@ -23,4 +23,12 @@ public class Location
     {
         this(0, 0);
     }
+    public boolean equals(Location loc)
+    {
+        return (this.xCoord == loc.xCoord && this.yCoord == loc.yCoord);
+    }
+    public int hashcode()
+    {
+        return Objects.hash(xCoord, yCoord);
+    }
 }
