@@ -1,8 +1,8 @@
 public class Point2d {
     // координата X
-    protected double xCoord;
+    private double xCoord;
     // координата Y
-    protected double yCoord;
+    private double yCoord;
     // Конструктор инициализации
     public Point2d (double x, double y) {
         xCoord = x;
@@ -10,7 +10,7 @@ public class Point2d {
     }
     // Конструктор по умолчанию.
     public Point2d () {
-    // Вызовите конструктор с двумя параметрами и определите источник.
+    // Вызов конструктора с двумя параметрами и определение источника.
         this(0, 0);
     }
     // Возвращение координаты X
@@ -21,11 +21,11 @@ public class Point2d {
     public double getY () {
         return yCoord;
     }
-    // Установка значения координаты X
+    // Значение координаты X
     public void setX ( double val) {
         xCoord = val;
     }
-    // Установка значения координаты Y
+    // Значение координаты Y
     public void setY ( double val) {
         yCoord = val;
     }

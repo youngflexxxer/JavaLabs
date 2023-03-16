@@ -8,7 +8,7 @@ public class Lab1 {
             System.out.print("Введите координаты точки " + i + ": ");
             int[] coords = new int[3];
             for(int j = 0; j < 3; j++) {
-                coords[j] = in.nextInt();
+                coords[j] = in.nextInt(); // ввод каждой точки
             }
             switch(i) {
                 case 1:
@@ -21,10 +21,10 @@ public class Lab1 {
         }
         in.close();
         if (Point3d.equals(point1, point2) || Point3d.equals(point2, point3) || Point3d.equals(point1, point3)) {
-            System.out.println("Имеются одинаковые точки!");
+            System.out.println("Есть одинаковые точки!");
         }
         else {
-        System.out.println("Площадь треугольника: " + computeArea(point1, point2, point3));
+        System.out.println("Площадь треугольника = " + computeArea(point1, point2, point3));
         }
     }
     public static double computeArea(Point3d p1, Point3d p2, Point3d p3) {
@@ -34,8 +34,8 @@ public class Lab1 {
         double c = p1.distanceTo(p3);
         // Вычисляем полупериметр
         double s = ((a + b + c) / 2);
-        // вычисляем площадь треугольника
-        double area = Math.sqrt(s * (s-a) * (s-b) * (s-c));
-        return area;
+        // площадь треугольника
+
+        return (Math.sqrt(s * (s-a) * (s-b) * (s-c)));
     }    
 }

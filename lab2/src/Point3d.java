@@ -30,6 +30,6 @@ public class Point3d extends Point2d {
         return false;
      }
      public double distanceTo(Point3d point) {
-         return (Math.round(Math.sqrt(Math.pow(xCoord - point.xCoord, 2) + Math.pow(yCoord - point.yCoord, 2) + Math.pow(zCoord - point.zCoord, 2)) * 100)) / 100;
+         return (Math.round(Math.sqrt(Math.pow(super.getX() - point.getX(), 2) + Math.pow(super.getY() - point.getY(), 2) + Math.pow(getZ() - point.getZ(), 2)) * 100)) / 100;
      }
 }
