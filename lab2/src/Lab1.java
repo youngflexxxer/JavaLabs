@@ -20,7 +20,7 @@ public class Lab1 {
             }           
         }
         in.close();
-        if (Point3d.equals(point1, point2) || Point3d.equals(point2, point3) || Point3d.equals(point1, point3)) {
+        if (point1.equals(point2) || point2.equals(point3) || point1.equals(point3)) {
             System.out.println("Есть одинаковые точки!");
         }
         else {
