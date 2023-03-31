@@ -25,9 +25,12 @@ public class Location
     {
         this(0, 0);
     }
-    public boolean equals(Location loc)
+    public boolean equals(Object obj)
     {
-        return (this.xCoord == loc.xCoord && this.yCoord == loc.yCoord);
+        if (this == obj) return true;
+        if (!(obj instanceof Location)) return false;
+        Location loc = (Location) obj;
+        return xCoord == loc.xCoord && yCoord == loc.yCoord;
     }
     public int hashcode()
     {
