@@ -6,5 +6,7 @@ lab2/bin
 .DS_Store
 lab3/bin
 lab3/.vscode
+.vscode
+.gitignore
 
 
