@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * This class stores the basic state necessary for the A* algorithm to compute a
