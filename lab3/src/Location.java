@@ -1,4 +1,3 @@
-import java.util.Objects;
 
 /**
  * This class represents a specific location in a 2D map.  Coordinates are
@@ -25,6 +24,7 @@ public class Location
     {
         this(0, 0);
     }
+    @Override
     public boolean equals(Object obj)
     {
         if (this == obj) return true;
@@ -32,8 +32,12 @@ public class Location
         Location loc = (Location) obj;
         return xCoord == loc.xCoord && yCoord == loc.yCoord;
     }
-    public int hashcode()
+    @Override
+    public int hashCode()
     {
-        return Objects.hash(xCoord, yCoord);
+        int result = 17; // Простое число
+        result = 37 * result + xCoord;
+        result = 37 * result + yCoord;
+        return result;
     }
 }

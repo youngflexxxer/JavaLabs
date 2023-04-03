@@ -40,20 +40,21 @@ public class AStarState
      **/
     public Waypoint getMinOpenWaypoint()
     {
-    Waypoint sol = null;
-
-    float min = Float.POSITIVE_INFINITY;
-    float totalCost = 0;
-
-    for (Waypoint p : openWaypoints.values())
-    {
-        totalCost = p.getTotalCost();
-        if (min > totalCost) {
-            min = totalCost;
-            sol = p;
+        if (numOpenWaypoints () == 0) {
+            return null;
         }
-    }
-    return sol;
+
+        Waypoint minWaypoint = null;
+        float min = Float.MAX_VALUE;
+
+        for (Waypoint waypoint : openWaypoints.values ()) {
+            float cost = waypoint.getTotalCost();
+            if (cost < min) {
+                min = cost;
+                minWaypoint = waypoint;
+            }
+        }
+        return minWaypoint;
     }
 
     /**
