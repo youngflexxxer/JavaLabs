@@ -12,29 +12,21 @@ public class FractalExplorer {
     private JImageDisplay display;
     private FractalGenerator fractal;
     private Rectangle2D.Double range;
-    JComboBox<FractalGenerator> comboBox;
+    private JFrame frame;
+    private JComboBox<FractalGenerator> comboBox;
+    private int rowsRemaining;
+    private JPanel southPanel, northPanel;
+    private JLabel fractalname;
+    private Container contentPane;
+    JButton resetButton, saveButton;
     
     private void drawFractal() {
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
-                // get the coordinates in the fractal space corresponding to this pixel
-                double xCoord = FractalGenerator.getCoord(range.x, range.x + range.width, size, x);
-                double yCoord = FractalGenerator.getCoord(range.y, range.y + range.height, size, y);
-                
-                // compute the number of iterations for the coordinates
-                int numIters = fractal.numIterations(xCoord, yCoord);
-                
-                // set the pixel color based on the number of iterations
-                if (numIters == -1) {
-                    display.drawPixel(x, y, 0); // black
-                } else {
-                    float hue = 0.7f + (float) numIters / 200f;
-                    int rgbColor = Color.HSBtoRGB(hue, 1f, 1f);
-                    display.drawPixel(x, y, rgbColor);
-                }
-            }
+        enableUI(false);
+        rowsRemaining = size;
+        for (int y = 0; y < size; y++) {
+            FractalWorker worker = new FractalWorker(y);
+            worker.execute();
         }
-        display.repaint();
     }
     
     private void reset() {
@@ -43,15 +35,15 @@ public class FractalExplorer {
     }
 
     public void createAndShowGUI() {
-        JFrame frame = new JFrame("Fractal");
+        frame = new JFrame("Fractal");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Container contentPane = frame.getContentPane();
+        contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
-        JPanel southPanel = new JPanel();
-        JPanel northPanel = new JPanel();
-        JLabel fractalname = new JLabel("Fractal:");
-        JButton resetButton = new JButton("Reset");
-        JButton saveButton = new JButton("Save image");
+        southPanel = new JPanel();
+        northPanel = new JPanel();
+        fractalname = new JLabel("Fractal:");
+        resetButton = new JButton("Reset");
+        saveButton = new JButton("Save image");
         resetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { reset(); }
         });
@@ -137,19 +129,70 @@ public class FractalExplorer {
     
         @Override
         public void mouseClicked(MouseEvent e) {
-            // Получаем координаты клика
-            int x = e.getX();
-            int y = e.getY();
-    
-            // Получаем координаты фрактала, соответствующие координатам клика
-            double xCoord = FractalGenerator.getCoord(range.x, range.x + range.width, size, x);
-            double yCoord = FractalGenerator.getCoord(range.y, range.y + range.height, size, y);
-    
-            // Масштабируем фрактал и центрируем его на точке клика
-            fractal.recenterAndZoomRange(range, xCoord, yCoord, 0.5);
-    
-            // Перерисовываем фрактал
-            fractalExplorer.drawFractal();
+            if(rowsRemaining == 0){
+                // Получаем координаты клика
+                int x = e.getX();
+                int y = e.getY();
+        
+                // Получаем координаты фрактала, соответствующие координатам клика
+                double xCoord = FractalGenerator.getCoord(range.x, range.x + range.width, size, x);
+                double yCoord = FractalGenerator.getCoord(range.y, range.y + range.height, size, y);
+        
+                // Масштабируем фрактал и центрируем его на точке клика
+                fractal.recenterAndZoomRange(range, xCoord, yCoord, 0.5);
+        
+                // Перерисовываем фрактал
+                fractalExplorer.drawFractal();
+            }
         }
+    }
+
+    private class FractalWorker extends SwingWorker<Object, Object> {
+        private int y;
+        int rgbColors[];
+
+        private FractalWorker(int yCoord) {
+            y = yCoord;
+        }
+
+        @Override
+        protected Object doInBackground() throws Exception {
+            rgbColors = new int[size];
+            for (int x = 0; x < rgbColors.length; x++) {
+                // get the coordinates in the fractal space corresponding to this pixel
+                double xCoord = FractalGenerator.getCoord(range.x, range.x + range.width, size, x);
+                double yCoord = FractalGenerator.getCoord(range.y, range.y + range.height, size, y);
+                
+                // compute the number of iterations for the coordinates
+                int numIters = fractal.numIterations(xCoord, yCoord);
+                
+                // set the pixel color based on the number of iterations
+                if (numIters == -1) {
+                    rgbColors[x] = 0;
+                } else {
+                    float hue = 0.7f + (float) numIters / 200f;
+                    rgbColors[x] = Color.HSBtoRGB(hue, 1f, 1f);
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void done() {
+            for (int x = 0; x < size; x++) {
+                display.drawPixel(x, y, rgbColors[x]);
+            }
+            display.repaint(0, 0, y, size, 1);
+            rowsRemaining--;
+            if(rowsRemaining == 0) {
+                enableUI(true);
+            }
+        }
+    }
+
+    private void enableUI(boolean val) {
+        comboBox.setEnabled(val);
+        saveButton.setEnabled(val);
+        resetButton.setEnabled(val);
     }
 }
