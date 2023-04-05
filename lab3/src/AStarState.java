@@ -67,7 +67,7 @@ public class AStarState
      **/
     public boolean addOpenWaypoint(Waypoint newWP)
     {
-        Waypoint other = openWaypoints.get (newWP.getLocation());
+        Waypoint other = openWaypoints.get(newWP.getLocation());
         if(other == null || newWP.getPreviousCost() < other.getPreviousCost ())
         {
             openWaypoints.put (newWP.getLocation(), newWP);
