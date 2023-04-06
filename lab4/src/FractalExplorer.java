@@ -94,13 +94,6 @@ public class FractalExplorer {
         }
     }
 
-    private void start()
-    {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() { createAndShowGUI(); }
-        });
-    }
-
     public FractalExplorer(int x) {
         this.size = x;
         this.fractal = new Mandelbrot();
@@ -117,7 +110,7 @@ public class FractalExplorer {
 
     public static void main(String[] args) {
         FractalExplorer app = new FractalExplorer(800);
-        app.start();
+        app.createAndShowGUI();
         app.drawFractal();
     }
     public class FractalMouseListener extends MouseAdapter {
